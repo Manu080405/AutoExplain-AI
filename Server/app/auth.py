@@ -52,12 +52,11 @@ def set_session(response: Response, user_id: str):
         key=COOKIE_NAME,
         value=create_token(user_id),
         httponly=True,
-        secure=COOKIE_SECURE,
-        samesite="lax",
+        secure=True,
+        samesite="none",
         max_age=ACCESS_TOKEN_MINUTES * 60,
         path="/",
     )
-
 
 async def current_user(request: Request):
     token = request.cookies.get(COOKIE_NAME)
@@ -183,8 +182,8 @@ async def logout(response: Response):
     response.delete_cookie(
         key=COOKIE_NAME,
         httponly=True,
-        secure=COOKIE_SECURE,
-        samesite="lax",
+        secure=True,
+        samesite="none",
         path="/",
     )
 
